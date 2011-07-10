@@ -1,0 +1,22 @@
+--- origsrc/clementine-0.7.1/3rdparty/libechonest/CMakeLists.txt	2011-03-29 14:16:25.000000000 -0500
++++ src/clementine-0.7.1/3rdparty/libechonest/CMakeLists.txt	2011-07-07 04:52:11.884912800 -0500
+@@ -13,7 +13,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
+     add_definitions( -Wall -Wundef -Wcast-align -Wchar-subscripts -Wpointer-arith
+        -Wwrite-strings -Wpacked -Wformat-security -Wmissing-format-attribute
+        -Wold-style-cast -Woverloaded-virtual -Wnon-virtual-dtor -Werror )
+-    if (NOT WIN32 AND NOT APPLE)
++    if (NOT WIN32 AND NOT APPLE AND NOT CYGWIN)
+         add_definitions( -fvisibility=hidden )
+     endif()
+ # to be added:
+--- origsrc/clementine-0.7.1/3rdparty/libprojectm/Common.hpp	2011-03-29 14:16:30.000000000 -0500
++++ src/clementine-0.7.1/3rdparty/libprojectm/Common.hpp	2011-07-07 05:00:45.826308500 -0500
+@@ -63,7 +63,7 @@ extern FILE *fmemopen(void *buf, size_t
+ 
+ #ifdef LINUX
+ #include <cstdlib>
+-#define projectM_isnan isnan
++#define projectM_isnan std::isnan
+ 
+ #endif
+ 

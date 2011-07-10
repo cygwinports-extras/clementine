@@ -1,0 +1,10 @@
+inherit qt4-cmake
+
+DESCRIPTION="Qt4 music player modelled after Amarok 1.4"
+HOMEPAGE="http://www.clementine-player.org/"
+SRC_URI="http://clementine-player.googlecode.com/files/${P}.tar.gz"
+PATCH_URI="0.7.1-cygwin.patch"
+
+DIFF_EXCLUDES="Info.plist config.inp libprojectM.pc presets"
+
+CYGCMAKE_ARGS="-DENABLE_DEVICEKIT=OFF -DENABLE_WIIMODEDEV=OFF"
