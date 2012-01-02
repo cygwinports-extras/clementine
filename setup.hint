@@ -1,5 +1,5 @@
 category: Audio
-requires: gstreamer0.10-plugins-base gstreamer0.10-plugins-good gstreamer0.10-plugins-oss libgcc1 libGL1 libGLEW1.5 libglib2.0_0 libgstreamer0.10_0 liblastfm0 libQtCore4 libQtDBus4 libQtGui4 libQtNetwork4 libQtOpenGL4 libQtSql4 libQtXml4 libstdc++6 libtag1 libX11_6 zlib0
+requires: gstreamer0.10-plugins-base gstreamer0.10-plugins-good libcdio13 libgcc1 libGL1 libGLEW1.7 libglib2.0_0 libgstinterfaces0.10_0 libgstreamer0.10_0 liblastfm0 libprotobuf7 libqca2 libqjson0 libQtCore4 libQtDBus4 libQtGui4 libQtNetwork4 libQtOpenGL4 libQtSql4 libQtXml4 libstdc++6 libtag1 libX11_6 zlib0
 sdesc: "Qt4 music player modelled after Amarok 1.4"
 ldesc: "Clementine is a multiplatform music player. It is inspired by 
 Amarok 1.4, focusing on a fast and easy-to-use interface for searching 
