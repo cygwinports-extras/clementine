@@ -1,0 +1,16 @@
+--- origsrc/clementine-1.1.1/ext/clementine-tagreader/CMakeLists.txt	2012-11-18 02:51:26.000000000 -0600
++++ src/clementine-1.1.1/ext/clementine-tagreader/CMakeLists.txt	2013-01-22 00:23:22.528566800 -0600
+@@ -31,11 +31,11 @@ add_executable(clementine-tagreader
+ )
+ 
+ target_link_libraries(clementine-tagreader
++  libclementine-tagreader
++  libclementine-common
+   ${TAGLIB_LIBRARIES}
+   ${QT_QTCORE_LIBRARY}
+   ${QT_QTNETWORK_LIBRARY}
+-  libclementine-common
+-  libclementine-tagreader
+ )
+ 
+ if(APPLE)

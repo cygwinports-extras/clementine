@@ -1,0 +1,32 @@
+--- origsrc/clementine-1.1.1/ext/libclementine-common/core/logging.cpp	2012-10-11 06:16:39.000000000 -0500
++++ src/clementine-1.1.1/ext/libclementine-common/core/logging.cpp	2013-01-21 23:41:56.128834200 -0600
+@@ -21,7 +21,7 @@
+ #include <QtGlobal>
+ 
+ #include <cxxabi.h>
+-#ifdef Q_OS_UNIX
++#ifdef Q_OS_LINUX
+ #include <execinfo.h>
+ #endif
+ 
+@@ -224,7 +224,7 @@ QString DemangleSymbol(const QString& sy
+ }
+ 
+ void DumpStackTrace() {
+-#ifdef Q_OS_UNIX
++#ifdef Q_OS_LINUX
+   void* callstack[128];
+   int callstack_size = backtrace(reinterpret_cast<void**>(&callstack), sizeof(callstack));
+   char** symbols = backtrace_symbols(reinterpret_cast<void**>(&callstack), callstack_size);
+--- origsrc/clementine-1.1.1/src/core/utilities.cpp	2012-11-18 02:51:26.000000000 -0600
++++ src/clementine-1.1.1/src/core/utilities.cpp	2013-01-22 00:19:56.618419600 -0600
+@@ -539,8 +539,8 @@ bool IsLaptop() {
+       return true;
+     }
+   }
+-  return false;
+ #endif
++  return false;
+ }
+ 
+ }  // namespace Utilities

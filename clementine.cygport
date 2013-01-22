@@ -1,0 +1,19 @@
+inherit qt4-cmake
+
+NAME="clementine"
+VERSION=1.1.1
+RELEASE=1
+CATEGORY="Audio"
+SUMMARY="Qt4 music player modelled after Amarok 1.4"
+DESCRIPTION="Clementine is a multiplatform music player. It is inspired by
+Amarok 1.4, focusing on a fast and easy-to-use interface for searching and
+playing your music."
+HOMEPAGE="http://www.clementine-player.org/"
+SRC_URI="http://clementine-player.googlecode.com/files/${P}.tar.gz"
+PATCH_URI="1.1.1-cygwin.patch  1.1.1-as-needed.patch"
+
+DIFF_EXCLUDES="Info.plist config.inp libprojectM.pc presets translations.pot"
+
+REQUIRES="gstreamer0.10-plugins-base gstreamer0.10-plugins-good"
+
+CYGCMAKE_ARGS="-DENABLE_DEVICEKIT=OFF -DENABLE_WIIMODEDEV=OFF -D__KDE_HAVE_GCC_VISIBILITY=NO"
