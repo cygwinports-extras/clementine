@@ -16,6 +16,7 @@ PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-dt_categories.patch
 	1.1.1-cygwin.patch
 	1.1.1-as-needed.patch
+	1.1.1-sqlite3-cygwin.patch
 "
 
 DIFF_EXCLUDES="Info.plist config.inp libprojectM.pc presets translations.pot"

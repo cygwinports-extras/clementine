@@ -1,0 +1,87 @@
+--- origsrc/clementine-1.1.1/3rdparty/qsqlite/sqlite3.c	2012-10-11 06:16:39.000000000 -0500
++++ src/clementine-1.1.1/3rdparty/qsqlite/sqlite3.c	2013-09-11 00:18:31.434443400 -0500
+@@ -7987,6 +7987,7 @@ SQLITE_PRIVATE void sqlite3PCacheSetDefa
+ ** Define the maximum size of a temporary filename
+ */
+ #if SQLITE_OS_WIN
++# define WIN32_LEAN_AND_MEAN
+ # include <windows.h>
+ # define SQLITE_TEMPNAME_SIZE (MAX_PATH+50)
+ #elif SQLITE_OS_OS2
+@@ -21493,6 +21494,9 @@ SQLITE_API int sqlite3_os_end(void){
+ #  include <sys/file.h>
+ #  include <sys/param.h>
+ #  include <sys/mount.h>
++#  if defined(__CYGWIN__)
++#   include <sys/cygwin.h>
++#  endif
+ # endif
+ #endif /* SQLITE_ENABLE_LOCKING_STYLE */
+ 
+@@ -25085,6 +25089,24 @@ typedef const sqlite3_io_methods *(*find
+ ** sqlite3_vfs object.
+ */
+ 
++#ifdef __CYGWIN__
++typedef enum {
++       cls_UNKNOWN,
++       cls_POSIXAdvisory,
++       cls_BSDMandatory,
++} cygwinLockingStrategyT;
++static cygwinLockingStrategyT cygwinLockingStrategy() {
++       static cygwinLockingStrategyT rc = cls_UNKNOWN;
++       if (rc == cls_UNKNOWN) {
++         const char* strategy = getenv("CYGWIN_SQLITE_LOCKING");
++         rc = strategy && sqlite3_stricmp(strategy, "posix") == 0 ?
++            cls_POSIXAdvisory : cls_BSDMandatory;
++       }
++       assert(rc != cls_UNKNOWN);
++       return rc;
++}
++#endif
++
+ /*
+ ** Initialize the contents of the unixFile structure pointed to by pId.
+ */
+@@ -25126,6 +25148,12 @@ static int fillInUnixFile(
+   if( noLock ){
+     pLockingStyle = &nolockIoMethods;
+   }else{
++#if __CYGWIN__ && SQLITE_ENABLE_LOCKING_STYLE
++     if (cygwinLockingStrategy() == cls_BSDMandatory) {
++         pLockingStyle = &flockIoMethods;
++     }
++     else
++#endif
+     pLockingStyle = (**(finder_type*)pVfs->pAppData)(zFilename, pNew);
+ #if SQLITE_ENABLE_LOCKING_STYLE
+     /* Cache zFilename in the locking context (AFP and dotlock override) for
+@@ -25544,6 +25572,18 @@ static int unixOpen(
+     p->pUnused->flags = flags;
+   }
+ 
++#ifdef __CYGWIN__
++  cygwinLockingStrategyT cls = cygwinLockingStrategy();
++  if (cls == cls_BSDMandatory) {
++       if ((fcntl(fd, F_LCK_MANDATORY, 1) != 0) && (errno != EINVAL)) {
++               // The API exists but it refused to enable mandatory locking!
++               ((unixFile*)pFile)->lastErrno = errno;
++               robust_close(p, fd, __LINE__);
++               return SQLITE_IOERR_ACCESS;
++       }
++  }
++#endif
++
+   if( isDelete ){
+ #if OS_VXWORKS
+     zPath = zName;
+@@ -28741,8 +28781,7 @@ static int winFullPathname(
+ ){
+   
+ #if defined(__CYGWIN__)
+-  UNUSED_PARAMETER(nFull);
+-  cygwin_conv_to_full_win32_path(zRelative, zFull);
++  cygwin_conv_path(CCP_POSIX_TO_WIN_A, zRelative, zFull, nFull);
+   return SQLITE_OK;
+ #endif
+ 
