@@ -1,25 +1,25 @@
 inherit qt4-cmake
 
 NAME="clementine"
-VERSION=1.1.1
-RELEASE=2
+VERSION=1.2.3
+RELEASE=1
 CATEGORY="Audio"
 SUMMARY="Qt4 music player modelled after Amarok 1.4"
 DESCRIPTION="Clementine is a multiplatform music player. It is inspired by
 Amarok 1.4, focusing on a fast and easy-to-use interface for searching and
 playing your music."
 HOMEPAGE="http://www.clementine-player.org/"
-SRC_URI="http://clementine-player.googlecode.com/files/${P}.tar.gz"
+SRC_URI="https://github.com/clementine-player/Clementine/archive/${VERSION}/Clementine-${VERSION}.tar.gz"
+SRC_DIR="Clementine-${VERSION}"
 PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-mygpo.patch
 	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-desktop.patch
-	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-dt_categories.patch
 	1.1.1-cygwin.patch
 	1.1.1-as-needed.patch
 	1.1.1-sqlite3-cygwin.patch
 "
 
-DIFF_EXCLUDES="Info.plist config.inp libprojectM.pc presets translations.pot"
+DIFF_EXCLUDES="Info.plist config.inp libprojectM.pc presets translations.pot maketarball.sh *.nsi"
 
 REQUIRES="gstreamer0.10-plugins-base gstreamer0.10-plugins-good"
 
