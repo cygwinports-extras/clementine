@@ -2,7 +2,7 @@ inherit qt4-cmake
 
 NAME="clementine"
 VERSION=1.2.3
-RELEASE=1
+RELEASE=2
 CATEGORY="Audio"
 SUMMARY="Qt4 music player modelled after Amarok 1.4"
 DESCRIPTION="Clementine is a multiplatform music player. It is inspired by
@@ -14,6 +14,8 @@ SRC_DIR="Clementine-${VERSION}"
 PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-mygpo.patch
 	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-desktop.patch
+	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-moodbar_flags.patch
+	http://pkgs.fedoraproject.org/cgit/clementine.git/plain/clementine-do-not-use-system-sha2.patch
 	1.1.1-cygwin.patch
 	1.1.1-as-needed.patch
 	1.1.1-sqlite3-cygwin.patch
